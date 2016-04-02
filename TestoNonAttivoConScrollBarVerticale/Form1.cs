@@ -17,8 +17,6 @@ namespace provaTestoCon_Scorrimento_non_attivo
             InitializeComponent();
         }
 
-        //static uint EM_GETLINECOUNT = 0x0BA;
-
         private int topIndex;
 
         private int bottomIndex;
@@ -26,9 +24,6 @@ namespace provaTestoCon_Scorrimento_non_attivo
         private int topLine;
 
         private int bottomLine;
-
-        //[DllImport("user32.dll")]
-        //public static extern int SendMessage(IntPtr hWnd, uint wMsg, int wParam, int lParam);
 
         private int numrows = 0;
 
@@ -60,7 +55,6 @@ namespace provaTestoCon_Scorrimento_non_attivo
                 textBox1.SelectionStart = pageNext;
             }
 
-            //textBox1.SelectionStart = objVertScroll.Value;
             textBox1.SelectionLength = 0;
             textBox1.ScrollToCaret();
         }
@@ -73,35 +67,21 @@ namespace provaTestoCon_Scorrimento_non_attivo
 
         private void textBox1_Resize(object sender, EventArgs e)
         {
-
-            Font stringFont = textBox1.Font;
-            SizeF stringSize = new SizeF();
-            Graphics mygraphics = this.CreateGraphics();
-            stringSize = mygraphics.MeasureString(textBox1.Text, stringFont);
-
-            //int lineHeightPixel = (int)(stringSize.Height + 0.5) + 2;
             int lineHeightPixel = TextRenderer.MeasureText(textBox1.Text, textBox1.Font).Height + 2;
 
             int pointTop = (int)(lineHeightPixel / 2);
             int pointBottom = (textBox1.ClientSize.Height - lineHeightPixel);
 
-            //MessageBox.Show("y position: " + pointHeight);
             topIndex = textBox1.GetCharIndexFromPosition(new Point(1, pointTop));
             bottomIndex = textBox1.GetCharIndexFromPosition(new Point(1, pointBottom));
 
-            //MessageBox.Show("y bottom: " + bottomIndex);
-
             topLine = textBox1.GetLineFromCharIndex(topIndex);
             bottomLine = textBox1.GetLineFromCharIndex(bottomIndex) + 1;
-
-            //MessageBox.Show("bottom Line: " + bottomLine);
-            //int numLinesDisplayed = textBox1.GetLineFromCharIndex(bottomIndex) + 1;
 
             int numLinesDisplayed = bottomLine - topLine;
 
             int numrows = textBox1.GetLineFromCharIndex(textBox1.Text.Length) + 1;
 
-            //int numrows = SendMessage(textBox1.Handle, EM_GETLINECOUNT, 0, 0);
             vScrollBar1.LargeChange = 1;
             if ((numrows - numLinesDisplayed) >= 1)
             {
@@ -123,9 +103,9 @@ namespace provaTestoCon_Scorrimento_non_attivo
 
         private void textBox1_MouseClick(object sender, MouseEventArgs e)
         {
-            MessageBox.Show("x,y: " + e.X + ", " + e.Y);
+            //MessageBox.Show("x,y: " + e.X + ", " + e.Y);
             bottomIndex = textBox1.GetCharIndexFromPosition(new Point(e.X, e.Y));
-            MessageBox.Show("y bottom: " + bottomIndex);
+            //MessageBox.Show("y bottom: " + bottomIndex);
             bottomLine = textBox1.GetLineFromCharIndex(bottomIndex);
 
             MessageBox.Show("bottom Line: " + bottomLine);
@@ -176,28 +156,6 @@ namespace provaTestoCon_Scorrimento_non_attivo
 
         }
 
-
-        //private void button1_Click(object sender, EventArgs e)
-        //{
-        //    topIndex = textBox1.GetCharIndexFromPosition(new Point(1, 1));  
-        //    bottomIndex = textBox1.GetCharIndexFromPosition(new Point(textBox1.ClientSize.Width - 2, textBox1.ClientSize.Height - 1));
-        //    MessageBox.Show("x,y: " + topIndex + ", " + bottomIndex);
-        //    textBox1.SelectionStart = bottomIndex;
-        //    textBox1.SelectionLength = 10;
-        //}
-
-        //private void textBox1_MouseClick(object sender, MouseEventArgs e)
-        //{
-        //    MessageBox.Show("x,y: " + e.X + ", " + e.Y);
-        //    Font stringFont = textBox1.Font;
-        //    SizeF stringSize = new SizeF();
-        //    Graphics mygraphics = this.CreateGraphics();
-        //    stringSize  = mygraphics.MeasureString("W", stringFont);
-        //    //POINT wpt = new POINT(e.X, e.Y);
-        //    //bottomIndex = (int)SendMessage(textBox1.Handle, EM_CHARFROMPOS, 0,ref wpt);
-        //    //bottomIndex = textBox1.GetCharIndexFromPosition(new Point(e.X, e.Y));
-        //    MessageBox.Show("x,y: " + topIndex + ", " + bottomIndex);
-        //}
 
     }
 }
